@@ -12,6 +12,10 @@ class Transfers:
         """Filter transfers where I payed."""
         return Transfers(self._frame[self._frame.amount < 0])
 
+    def received(self) -> 'Transfers':
+        """Filter transfers where I received money."""
+        return Transfers(self._frame[self._frame.amount > 0])
+
     def for_(self, reason: str) -> 'Transfers':
         """Filter transfers by reason column pattern."""
         return Transfers(self._frame[self._frame.reason.str.contains(reason)])
@@ -31,6 +35,9 @@ class Transfers:
         """Filter transfers by date."""
         date_filter = pd.date_range(start_date, end_date)
         return Transfers(self._frame[self._frame.date.isin(date_filter)])
+
+    def count(self) -> int:
+        return self._frame.shape[0]
 
     def __getattr__(self, attr: str):
         return getattr(self._frame, attr)
