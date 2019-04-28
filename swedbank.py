@@ -18,7 +18,7 @@ class Transfers:
 
     def for_(self, reason: str) -> 'Transfers':
         """Filter transfers by reason column pattern."""
-        return Transfers(self._frame[self._frame.reason.str.contains(reason)])
+        return Transfers(self._frame[self._frame.reason.str.contains(reason) == True])
 
     def exclude(self, reason: str) -> 'Transfers':
         """Exclude transfers that match reason column pattern."""
